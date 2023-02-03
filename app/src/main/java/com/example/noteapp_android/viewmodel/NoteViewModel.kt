@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.noteapp_android.database.repository.NoteRepository
 import com.example.noteapp_android.model.Note
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.nio.channels.IllegalChannelGroupException
+import javax.inject.Inject
 
-class NoteViewModel(application: Application) : ViewModel() {
-
-    private val noteRepository: NoteRepository = NoteRepository(application)
+@HiltViewModel
+class NoteViewModel @Inject constructor(val noteRepository: NoteRepository) : ViewModel() {
 
     fun insertNote(note: Note) = viewModelScope.launch {
         noteRepository.insertNote(note)
@@ -28,12 +29,4 @@ class NoteViewModel(application: Application) : ViewModel() {
 
     fun getAllNote(): LiveData<List<Note>> = noteRepository.getAllNote()
 
-    class NoteViewModelFactory(private val application: Application): ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(NoteViewModel::class.java)){
-                return NoteViewModel(application) as T
-            }
-            throw IllegalArgumentException("Unable construct viewModel")
-        }
-    }
 }
