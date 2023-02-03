@@ -2,29 +2,39 @@ package com.example.noteapp_android.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.noteapp_android.R
+import com.example.noteapp_android.databinding.ActivityAddNoteBinding
+import com.example.noteapp_android.databinding.ActivityUpdateNoteBinding
 import com.example.noteapp_android.model.Note
 import com.example.noteapp_android.viewmodel.NoteViewModel
-import kotlinx.android.synthetic.main.activity_update_note.*
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class UpdateNoteActivity : AppCompatActivity() {
-    private val noteViewModel: NoteViewModel by lazy {
-        ViewModelProvider(
-            this,
-            NoteViewModel.NoteViewModelFactory(this.application)
-        )[NoteViewModel::class.java]
-    }
+    private val TAG = "NOTE_VIEW_MODEL"
+
+    private lateinit var binding: ActivityUpdateNoteBinding
+
+    private val noteViewModel: NoteViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_update_note)
-        val note = intent.getSerializableExtra("Update_note") as Note
-        edt_note_title.setText(note.title)
-        edt_note_description.setText(note.description)
 
-        btn_update.setOnClickListener {
-            note.title=edt_note_title.text.toString()
-            note.description=edt_note_description.text.toString()
+        binding = ActivityUpdateNoteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        Log.d(TAG, "UpdateNoteActivity: ${noteViewModel.noteRepository} , $noteViewModel")
+
+        val note = intent.getSerializableExtra("UPDATE_NOTE") as Note
+        binding.edtNoteTitle.setText(note.title)
+        binding.edtNoteDescription.setText(note.description)
+
+        binding.btnUpdate.setOnClickListener {
+            note.title = binding.edtNoteTitle.text.toString()
+            note.description = binding.edtNoteDescription.text.toString()
             noteViewModel.updateNote(note)
             finish()
         }

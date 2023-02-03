@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".NoteApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,20 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Noteappandroid"
         tools:targetApi="31">
-        <activity
-            android:name=".activities.UpdateNoteActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.AddNoteActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
+        <activity android:name=".activities.UpdateNoteActivity" />
+        <activity android:name=".activities.AddNoteActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">

@@ -8,10 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.noteapp_android.R
 import com.example.noteapp_android.model.Note
-import org.w3c.dom.Text
+
 
 class NoteAdapter(
     private val context: Context,
